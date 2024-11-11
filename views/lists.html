@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>List Randomizer</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/lists.css" />
     <script
       src="https://kit.fontawesome.com/e3cd37ab50.js"
       crossorigin="anonymous"
     ></script>
-    <script src="js/script.js" defer></script>
+    <script src="js/listsscript.js" defer></script>
   </head>
   <body>
     <h1>Welcome to the List Randomizer!</h1>
@@ -20,10 +20,10 @@
     <textarea
       placeholder="enter items here, each on a separate line..."
     ></textarea>
-    <button class="shufflebtn btn">Shuffle</button>
+    <button id="shufflebtn" class="btn">Shuffle</button>
     <div>
-      <button class="backbtn btn hide">Back</button>
-      <button class="saveListBtn btn hide">Save my list</button>
+      <button id="backbtn" class="btn hide">Back</button>
+      <button id="saveListBtn" class="btn hide">Save my list</button>
     </div>
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -36,8 +36,8 @@
           maxlength="150"
         />
         <div class="modal-buttons">
-          <button id="saveBtn">Save</button>
-          <button id="cancelBtn">Cancel</button>
+          <button id="saveBtn" class="btn">Save</button>
+          <button id="cancelBtn" class="btn">Cancel</button>
         </div>
       </div>
     </div>

@@ -10,16 +10,37 @@ class Lista{
     items = [];
 }
 
-let dataCookie;
-let shuffleButton = document.querySelector(".shufflebtn")
+let token = localStorage.getItem('token')
+
+
+fetch('http://localhost:8080/validate-token',{
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    }   
+})
+.then(response => {
+    if (!response.ok) {        
+        console.log("token inválido ou erro na rede.")
+        window.location.href = '/';
+    }        
+    return response;
+})
+.catch(error => {
+    console.log(error.message) 
+});
+
+
+let shuffleButton = document.querySelector("#shufflebtn")
 let paragraph =  document.querySelector("p")
 let textArea = document.querySelector("textarea")
-let backButton = document.querySelector(".backbtn")
-let saveListButton = document.querySelector(".saveListBtn")
-let saveButton = document.getElementById("saveBtn")
-let cancelButton = document.getElementById("cancelBtn");
-let listName = document.getElementById("modalInput")
-let span = document.getElementsByClassName("close-btn")[0];
+let backButton = document.querySelector("#backbtn")
+let saveListButton = document.querySelector("#saveListBtn")
+let saveButton = document.querySelector("#saveBtn")
+let cancelButton = document.querySelector("#cancelBtn");
+let listName = document.querySelector("#modalInput")
+let span = document.querySelector(".close-btn");
 
 function shuffleList(){
     let items = textArea.value;
@@ -29,19 +50,21 @@ function shuffleList(){
     fetch('http://localhost:8080/list/shuffle', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(items) 
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Erro na resposta da rede');
-        }
+        }        
         return response.json();
     })
     .then(data => {
-       showList(data) 
-       dataCookie = data;
+        console.log(data);
+        showList(data) 
+        localStorage.setItem(list, data);
     })
     .catch(error => {
         console.log(error.message) 
@@ -87,12 +110,8 @@ saveListButton.addEventListener("click", function(event) {
 
 saveButton.addEventListener("click", function(event) {
     event.preventDefault()
-    let lista = new Lista();
+ /*   let lista = new Lista();
     lista.description = listName.value;
-
-    for(let i=0; i<dataCookie.length; ++i){
-        lista.items.push(new Item(dataCookie[i]));
-    }
 
     fetch('http://localhost:8080/list', {
         method: 'POST',
@@ -113,7 +132,7 @@ saveButton.addEventListener("click", function(event) {
     .catch(error => {
         console.log(error.message) 
     });
-
+*/
 })
 
 span.onclick = function() {
